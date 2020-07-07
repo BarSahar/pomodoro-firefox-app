@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "pomoApp",
+  "version": "1.0",
+  "description": "pomodoro app with marked sites for focused mode",
+  "icons": {
+    "48": "icons/border-48.png",
+    "96": "icons/border-48.png"
+  },
+  "permissions": [
+    "alarms"
+  ],
+  "background": {
+    "scripts": ["app.js"]
+  },
+  "browser_action": {
+    "default_icon": "icons/border-48.png",
+    "default_title": "pomoApp",
+    "default_popup": "popup/choose_beast.html"
+  }
+}
