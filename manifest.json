@@ -24,6 +24,6 @@
       "64": "icons/border-48.png"
     },
     "default_title": "pomoApp",
-    "default_popup": "popup/choose_beast.html"
+    "default_popup": "popup/popup.html"
   }
 }

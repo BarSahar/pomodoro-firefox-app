@@ -22,6 +22,22 @@ html, body {
   background-color: #E5F2F2;
 }
 
+.start {
+  background-color: #c6f0d6;
+}
+
+.start:hover {
+  background-color: #aed3bc;
+}
+
+.pause {
+  background-color: #ecbbbb;
+}
+
+.pause:hover {
+  background-color: #c59d9d;
+}
+
 .reset {
   background-color: #FBFBC9;
 }
