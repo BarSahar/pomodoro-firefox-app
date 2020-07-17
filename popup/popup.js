@@ -1,6 +1,44 @@
 
+function initPopup() {
+  $('#pause').hide();
+  initClickListener();
 
-function updateTimer(page) {
+  updateDisplay();
+  setInterval(updateDisplay, 500);
+}
+
+function initClickListener() {
+  $('#start').on("click", (e) => {
+    $('#start').hide();
+    $('#pause').show();
+
+    browser.runtime.sendMessage({
+      command: "start"
+    })
+  });
+
+  $('#pause').on("click", (e) => {
+    $('#start').show();
+    $('#pause').hide();
+
+    browser.runtime.sendMessage({
+      command: "pause"
+    })
+  });
+
+  $('#reset').on("click", (e) => {
+    $('#start').show();
+    $('#pause').hide();
+
+    browser.runtime.sendMessage({
+      command: "reset"
+    })
+  });
+}
+
+async function updateDisplay() {
+  page = await browser.runtime.getBackgroundPage();
+
   let currTime = page.currTime;
   let currInterval = page.currInterval;
   let isFocused = page.isFocused;
@@ -14,43 +52,9 @@ function updateTimer(page) {
   if (seconds < 10) {
     seconds = '0' + seconds;
   }
-  
+
   $('#timer').text(minutes + ':' + seconds);
   $('#iteration').text(currInterval + '/' + maxInterval);
-
 }
 
-function onError(error) {
-  console.log(`Error: ${error}`);
-}
-
-function timerTick() {
-  browser.runtime.getBackgroundPage().then(updateTimer, onError);
-}
-
-function initClickListener() {
-  $('#start').on("click", (e) => {
-    $('#start').hide();
-    $('#pause').show();
-    browser.runtime.sendMessage({
-      command:"start"
-    })
-  });
-  $('#pause').on("click", (e) => {
-    $('#start').show();
-    $('#pause').hide();
-    browser.runtime.sendMessage({
-      command:"pause"
-    })
-  });
-  $('#reset').on("click", (e) => {
-    browser.runtime.sendMessage({
-      command:"reset"
-    })
-  });
-}
-
-$('#pause').hide();
-initClickListener();
-timerTick();
-setInterval(timerTick, 500);
+initPopup();

@@ -1,6 +1,6 @@
-var currTime = 0;
-var currInterval = 0;
-var isFocused = true;
+let currTime = 0;
+let currInterval = 0;
+let isFocused = true;
 
 (function() {
     if (window.hasRun) {
@@ -9,6 +9,8 @@ var isFocused = true;
     window.hasRun = true;
 
     let timer;
+    let audio = new Audio('asset/alarm.mp3');
+    
     const focusTime = 20*60*1000;
     const freeTime = 10*60*1000;
     const superFreeTime = 30*60*1000;
@@ -17,17 +19,19 @@ var isFocused = true;
     
 
     browser.runtime.onMessage.addListener((message) => {
-      if(message.command === "start") {
-        resetVars();
-        timer = setInterval(timerTick, timeTick);
-      } else if(message.command === "pause") {
-        //is pause or resume??
-        clearInterval(timer);
-      } else if(message.command === "reset") {
-        //first pause it
-        resetVars();
+      switch(message.command) {
+        case "start" :
+          resetVars();
+          timer = setInterval(timerTick, timeTick);
+          break;
+        case "pause" :
+          clearInterval(timer);
+          break;
+        case "reset" :
+          clearInterval(timer);
+          resetVars();
+          break;
       }
-
     });
 
     function timerTick() {
@@ -35,18 +39,18 @@ var isFocused = true;
       
       if(currTime > 0) {
         return; 
+      }    
+      setupNextIteration();
+      
+      audio.play();
+      if (isFocused) {
+        alert("Focus time!");
+      } else {
+        alert("Break time, Facebook away!");
       }
-      
-      // browser.runtime.sendMessage({
-      //   command:"done",
-
-      //   timeLeft:currTime,
-      //   overAllTime:-1,
-      //   isInFocus:isFocused
-      // })
+    }
     
-      
-      //play sound?
+    function setupNextIteration() {
       isFocused = !isFocused;
       currInterval++;
     
@@ -58,8 +62,7 @@ var isFocused = true;
       currInterval = -1;
       currTime = superFreeTime;
     }
-    
-    
+
     function resetVars() {
       currTime = focusTime;
       currInterval = 0;

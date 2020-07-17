@@ -2,23 +2,23 @@ html, body {
   width: 100px;
 }
 
-.hidden {
-  display: none;
-}
-
-.button {
+.elem  {
   margin: 3% auto;
   padding: 4px;
   text-align: center;
   font-size: 1.5em;
+  cursor: default;
+}
+
+.button {
   cursor: pointer;
 }
 
-.beast:hover {
-  background-color: #CFF2F2;
+.display {
+  background-color: #E5F2F2;
 }
 
-.beast {
+.display {
   background-color: #E5F2F2;
 }
 
